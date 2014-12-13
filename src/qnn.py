@@ -6,17 +6,18 @@ import numpy as np
 class Experience():
     def __init__(self, s1, a1, r, s2, a2):
         '''
-        Our experiences include the full SARSA (not just SARS like DeepMind) so we can do a SARSA update if we want
+        Constructor
         '''
         self.s1 = s1
         self.s2 = s2
         self.a1 = a1
+        #Note: Include the next action to use SARSA update rule
         self.a2 = a2
         self.r = r
 
 class QNN():
     """
-    Neural Q-Network. Includes experience replay!
+    Neural Q-Network. Includes experience replay.
     nactions: the number of actions
     input_size: the number of inputs
     max_experiences: the total number of experiences to save for replay
@@ -33,8 +34,8 @@ class QNN():
         return self.GetValue(s,a)
 
     def __init__(self, nactions, input_size, max_experiences=500, gamma=0.6, alpha=0.1, use_sarsa=False):
+        #Default uses 2 hidden layers of equal size
         lay = [input_size, int((nactions+input_size)/2.0), int((nactions+input_size)/2.0), nactions]
-        # lay = [input_size, int((nactions+input_size)/2.0), nactions]
         self.nactions = nactions
         self.NN = NeuralNet(layers=lay, epsilon=0.154, learningRate=alpha)
         self.experiences = []

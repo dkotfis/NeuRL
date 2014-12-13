@@ -6,9 +6,9 @@ class NeuralNet:
         '''
         Constructor
         Arguments:
-        	layers - a numpy array of L integers (L is # layers in the network)
-        	epsilon - one half the interval around zero for setting the initial weights
-        	learningRate - the learning rate for backpropagation
+          layers - a numpy array of L integers (L is # layers in the network)
+          epsilon - one half the interval around zero for setting the initial weights
+          learningRate - the learning rate for backpropagation
         '''
         self.layers = layers
         self.epsilon = epsilon
@@ -29,8 +29,11 @@ class NeuralNet:
 
     def update(self, X, Y, a):
         '''
-        Used to backpropagate the and correct based on an input x, prediction a, and truth Y
-        X is a d-dimentional vector, 
+        Backpropagates and adjust weights based on assigned blame
+        Arguments:
+          X is a d-dimentional vector of inputs
+          Y is a truth set of outputs
+          a is the predicted outputs from propagation
         '''
         layers = self.layers
         epsilon = self.epsilon
@@ -45,7 +48,6 @@ class NeuralNet:
             size = layers[i+1] * (layers[i]+1)
             theta[i]=theta_vec[flag:(flag+size)].reshape(layers[i+1],-1)
             flag = flag+size
-            # print "###########", theta[i].shape
         
         # record vector for converge condition
         grad = np.empty((length-1), dtype=object)
@@ -66,7 +68,8 @@ class NeuralNet:
             if j > 1:
                 error[j]= error[j][1:]
         
-        error[length-1][Y==0.0] == 0.0 #IMPORTANT: This step makes us only update the action that we observed   
+        #IMPORTANT: This step makes the network only update from non-zero observed outputs. Typical NN's do not do this.
+        error[length-1][Y==0.0] == 0.0
         
         # calculate gradient
         if grad[length-2] == None:
@@ -82,6 +85,7 @@ class NeuralNet:
                 grad[k] = grad[k] + np.dot(error[k+1],activation[k].T)
             if k == 0:
                 grad[k] = grad[k][1:,:]
+
         # compute partial derivative
         for i in range(length-2,-1,-1):
             row, col = theta[i].shape
@@ -104,27 +108,11 @@ class NeuralNet:
 
     def propagate(self, X):
         '''
-        Used the model to predict weighted output values for instance x
+        Uses the model to predict weighted output values
         Arguments:
-            x is a d-dimenstional numpy array
+          X is a d-dimenstional numpy array
         Returns:
-            a c-dimensional numpy array of the strength of each output
-        '''
-        d = len(X)
-        
-        # vector theta
-        theta_fit = self.theta
-        a = self.forwardprop(X,theta_fit)
-        
-        return a
-        
-
-    def forwardprop(self, X, theta):
-        '''
-        take in parameters vector theta | theta_1 ~ theta_(L-1)
-        take in instance(s) X
-        used by predict() and backprop()
-        return output(s) regarding input instance(s)
+          a c-dimensional numpy array of the strength of each output
         '''
         layers = self.layers
         length = len(layers)
@@ -135,7 +123,7 @@ class NeuralNet:
         flag = 0        
         for i in range(0,length-1):
             size = layers[i+1] * (layers[i]+1)
-            theta_mat[i]=theta[flag:(flag+size)].reshape(layers[i+1],-1)
+            theta_mat[i]=self.theta[flag:(flag+size)].reshape(layers[i+1],-1)
             flag = flag+size
                 
         layerX = np.empty((length),dtype=object)
@@ -154,7 +142,6 @@ class NeuralNet:
         # store each layer
         self.activation = layerX
         output = layerX[length-1]
-        # print layerX
         
         return output
                 
