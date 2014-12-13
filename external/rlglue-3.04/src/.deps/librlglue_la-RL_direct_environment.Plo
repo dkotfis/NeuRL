@@ -1,0 +1,5 @@
+librlglue_la-RL_direct_environment.lo \
+  librlglue_la-RL_direct_environment.o: RL_direct_environment.c \
+  ../config/config.h
+
+../config/config.h:
