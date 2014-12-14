@@ -47,7 +47,7 @@ class QNN():
 
     def GetValue(self, s, a=None):
         """ Return the Q(s,a) value of state (s) for action (a)
-        or al values for Q(s)
+        or all values for Q(s)
         """
         out = self.NN.propagate(s)
         if (a==None):

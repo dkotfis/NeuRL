@@ -4,6 +4,7 @@
 *.pyc
 *DS_Store
 *~
+build
 external/ale_0.4-2.4/ale_0_4/ale
 external/ale_0.4-2.4/ale_0_4/doc/examples/RLGlueAgent
 external/ale_0.4-2.4/ale_0_4/doc/examples/RLGlueExperiment
