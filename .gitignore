@@ -4,6 +4,8 @@
 *.pyc
 *DS_Store
 *~
+external/rlglue-3.04/src/.deps/
+external/c-codec-2.0/src/.deps/
 external/ale_0.4-2.4/ale_0_4/ale
 external/ale_0.4-2.4/ale_0_4/doc/examples/RLGlueAgent
 external/ale_0.4-2.4/ale_0_4/doc/examples/RLGlueExperiment

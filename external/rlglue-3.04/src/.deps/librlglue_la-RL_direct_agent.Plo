@@ -1,4 +1,0 @@
-librlglue_la-RL_direct_agent.lo librlglue_la-RL_direct_agent.o:  \
- RL_direct_agent.c ../config/config.h
-
-../config/config.h:
