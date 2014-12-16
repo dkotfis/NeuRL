@@ -71,17 +71,10 @@ class NeuralNet:
         error[length-1][Y==0.0] == 0.0
         
         # calculate gradient
-        if grad[length-2] == None:
-            grad[length-2] = np.dot(error[length-1],activation[length-2].T)
-        else:
-            grad[length-2] = grad[length-2] + np.dot(error[length-1],activation[length-2].T)
+        grad[length-2] = np.dot(error[length-1],activation[length-2].T)
     
         for k in range(length-3,-1,-1):
-            if grad[k] == None:
-                grad[k] = np.dot(error[k+1],activation[k].T)
-
-            else:
-                grad[k] = grad[k] + np.dot(error[k+1],activation[k].T)
+            grad[k] = np.dot(error[k+1],activation[k].T)
             if k == 0:
                 grad[k] = grad[k][1:,:]
 

@@ -96,7 +96,54 @@ void NeuralNet::update(const std::vector<double> &x, const std::vector<double> &
     flag = flag + size;
   }
 
-  //TODO: Finish this function
+  //Declare error structure
+  std::vector<Eigen::VectorXd> error(length);
+
+  //Make a copy of the inputs so the arguments remain const
+  std::vector<double> sy = y;
+  std::vector<double> sa = a;
+
+  //Cast the input to Eigen types for math
+  Eigen::VectorXd ea = Eigen::Map<Eigen::VectorXd>(sa.data(), sa.size());
+  Eigen::VectorXd ey = Eigen::Map<Eigen::VectorXd>(sy.data(), sy.size());
+
+  //Calculate error for each layer
+  error[length-1] = ea - ey;
+  for (int i = length-2; i > 0; i--) {
+    error[i] = (theta_mat[i].transpose() * error[i+1]).cwiseProduct(activation_[i].cwiseProduct(Eigen::VectorXd::Ones(activation_[i].size()) - activation_[i]));
+    
+    //Remove the bias element for every layer but the first
+    //TODO: Please tell me there a better way to do this in Eigen?
+    if (i > 1) {
+      error[i].segment(0, error[i].size()-1) = error[i].tail(error[i].size()-1);
+      error[i].conservativeResize(error[i].size()-1);
+    }
+  }
+
+  //Zero-out errors corresponding to zero inputs.
+  //IMPORTANT: This step makes the network only update from non-zero observed outputs. Typical NN's do not do this.
+  error[length-1].cwiseProduct(ey) / *std::max_element(sy.begin(), sy.end());
+  
+  for (int i = length-2; i >= 0; i--) {
+    //Calculate gradients
+    Eigen::MatrixXd grad = error[i+1] * activation_[i].transpose();
+
+    //Remove the row of 1's from the last gradient
+    if (i==0) {
+      grad.block(0, 0, grad.rows()-1, grad.cols()) = grad.block(1, 0, grad.rows()-1, grad.cols());
+      grad.conservativeResize(grad.rows()-1, grad.cols());
+    }
+
+    //Calculate partial derivatives
+    Eigen::MatrixXd temp = theta_mat[i] * regularization_;
+    temp.col(0) = Eigen::VectorXd::Zero(temp.cols());
+    Eigen::MatrixXd derivative = grad + temp;
+
+    //Update thetas
+    theta_mat[i] = theta_mat[i] - learningRate_ * derivative;
+  }
+
+  //TODO: Does there need to be a step copying thetas back into the global vector?
 }
 
 void NeuralNet::propagateAndUpdate(const std::vector<double> &x, const std::vector<double> &y) {
