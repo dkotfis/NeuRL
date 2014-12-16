@@ -4,6 +4,10 @@ project(NeuRL)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 
+#Add Eigen dependency
+find_package(Eigen REQUIRED)
+include_directories(${EIGEN_INCLUDE_DIRS})
+
 #Set up include and lib paths
 include_directories(include)
 
@@ -16,6 +20,7 @@ endif()
 
 #Build the NeuRL Library
 add_library(neurl src/neural_net.cpp src/neural_q.cpp)
+target_link_libraries(neurl ${EIGEN_LIBRARIES})
 
 #Create the example Mario agent executable
 #add_executbale(mario_agent experiments/mario/marioAgent.cpp)

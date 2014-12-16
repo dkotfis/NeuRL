@@ -55,7 +55,6 @@ class NeuralNet:
         
         # perform forward propogation
         error = np.empty((length),dtype=object)
-        out_fprop = a
 
         # activation 0~ l-1, with bias node
         activation = self.activation

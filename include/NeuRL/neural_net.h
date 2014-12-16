@@ -2,6 +2,7 @@
 #define NEURAL_NET_H_
 
 #include <vector>
+#include <Eigen/Dense>
 
 namespace NeuRL {
 
@@ -21,6 +22,10 @@ class NeuralNet {
 
   /*! The neural network weights, flattened into a single dimension. */
   std::vector<double> theta_;
+
+  /*! The stored off layers from the last propagation */
+  //TODO: This is bad practice... redo the API to make this unnecessary
+  mutable std::vector<Eigen::VectorXd> activation_;
 
   /*! The size of each layer in the network */
   std::vector<int> layers_;
