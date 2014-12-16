@@ -1,4 +1,6 @@
 
+//#include <Eigen/Dense>
+
 #include <NeuRL/neural_net.h>
 #include <NeuRL/activation_functions.h>
 
@@ -13,6 +15,17 @@ NeuralNet::NeuralNet(const std::vector<int> &layers, double epsilon, double lear
 }
 
 void NeuralNet::propagate(const std::vector<double> &x, std::vector<double> &a) const {
+
+  int length = layers_.size();
+
+  //std::vector<MatrixXf> theta_mat;
+
+  int flag = 0;
+  for (int i = 0; i < length-1; i++) {
+    int size = layers_[i+1] * (layers_[i]+1);
+    //theta_mat[i] = ;
+    flag = flag + size;
+  }
 
 }
 
