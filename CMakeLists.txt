@@ -8,6 +8,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 find_package(Eigen REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS})
 
+#Set RLGlue Libraries
+set(RLGLUE_LIBS rlutils rlagent rlgluenetdev)
+
 #Set up include and lib paths
 include_directories(include)
 
@@ -22,6 +25,10 @@ endif()
 add_library(neurl src/neural_net.cpp src/neural_q.cpp)
 target_link_libraries(neurl ${EIGEN_LIBRARIES})
 
-#Create the example Mario agent executable
-#add_executbale(mario_agent experiments/mario/marioAgent.cpp)
-#target_link_libraries(mario_agent neurl)
+#Build the rl-glue agent core library with NeuRL
+add_library(neurl_agent experiments/common/neurlAgent.cpp)
+target_link_libraries(neurl_agent neurl)
+
+#Build Mario agent
+add_executable(mario_agent experiments/mario/marioAgent.cpp)
+target_link_libraries(mario_agent neurl_agent neurl ${RLGLUE_LIBS})

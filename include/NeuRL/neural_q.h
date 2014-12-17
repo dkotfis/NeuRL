@@ -10,7 +10,7 @@ class NeuralQ {
 
  public:
 
-  NeuralQ(int numActions, int inputSize, int maxExperiences = 500, double gamma = 0.6, double alpha = 0.1, bool useSARSA = false);
+  NeuralQ(int numActions, int inputSize, int maxExperiences = 500, double gamma = 0.6, double alpha = 0.2, bool useSARSA = false);
 
   /*! Destructor cleans up memory */
   ~NeuralQ() {

@@ -28,7 +28,7 @@ my_env["RLGLUE_PORT"] = args.glue_port
 # Start the necessary processes:
 p1 = subprocess.Popen(['rl_glue'], env=my_env)
 p2 = subprocess.Popen(['./mario/mario_environment.sh'], env=my_env)
-p3 = subprocess.Popen(['./mario/mario_agent.sh'], env=my_env)
+p3 = subprocess.Popen(['../build/mario_agent'], env=my_env)
 
 p1.wait()
 p2.wait()
