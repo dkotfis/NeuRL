@@ -9,7 +9,7 @@ find_package(Eigen REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS})
 
 #Set RLGlue Libraries
-set(RLGLUE_LIBS rlutils rlagent rlgluenetdev)
+set(RLGLUE_LIBS rlgluenetdev rlutils)
 
 #Set up include and lib paths
 include_directories(include)
@@ -31,4 +31,4 @@ target_link_libraries(neurl_agent neurl)
 
 #Build Mario agent
 add_executable(mario_agent experiments/mario/marioAgent.cpp)
-target_link_libraries(mario_agent neurl_agent neurl ${RLGLUE_LIBS})
+target_link_libraries(mario_agent rlagent neurl_agent neurl ${RLGLUE_LIBS})

@@ -18,6 +18,7 @@ external/c-codec-2.0/src/.libs/
 external/c-codec-2.0/src/Makefile
 external/c-codec-2.0/tests/Makefile
 external/python-codec/src/build/
+external/rlglue-3.04/libtool
 external/rlglue-3.04/Makefile
 external/rlglue-3.04/config.log
 external/rlglue-3.04/config.status	
@@ -25,6 +26,7 @@ external/rlglue-3.04/src/.libs/
 external/rlglue-3.04/src/rl_glue
 external/rlglue-3.04/config.status
 external/rlglue-3.04/src/Makefile
+external/rlglue-3.04/src/.deps/
 external/rlglue-3.04/tests/Makefile
 external/15-rl-competition-2009/agents/helicopterAgentCPP/RL_agent
 external/15-rl-competition-2009/agents/marioAgentJava/bin/
