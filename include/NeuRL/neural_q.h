@@ -20,6 +20,9 @@ class NeuralQ {
   /*! Gets the Q-Value of a state/action pair. If the action is not given, it defaults to all actions. */
   std::vector<double> value(const std::vector<double> &s, int a = -1) const;
 
+  /*! Gets the action corresponding to the optimal policy for the given state */
+  int policy(const std::vector<double> &s) const;
+
   /*! Draws experiences from the pool and trains the network on them. Defaults to 0, which uses the default number. */
   void replayExperiences(int num = 0);
 

@@ -27,6 +27,19 @@ std::vector<double> NeuralQ::value(const std::vector<double> &s, int a) const {
   return result;
 }
 
+int NeuralQ::policy(const std::vector<double> &s) const {
+  int act = -1;
+  double max_val = 0.0;
+  std::vector<double> q_vals = this->value(s);
+  for (int i = 0; i < q_vals.size(); i++) {
+    if (q_vals[i] > max_val) {
+      max_val = q_vals[i];
+      act = i;
+    }
+  }
+  return act;
+}
+
 void NeuralQ::replayExperiences(int num) {
   //Use the default number of samples if not assigned
   if (num == 0) {
