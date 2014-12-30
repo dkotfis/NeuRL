@@ -1,0 +1,24 @@
+<project name="MarioEnv" basedir="." >
+
+	<property name="baseLibraryDir" value="../.."/>
+	<property name="this.project.system.directory" value="${baseLibraryDir}/system"/>
+	<property name="project.name" value="${ant.project.name}"/>
+	<property name="this.project.product.directory" value="${baseLibraryDir}/products"/>
+	<import file="${this.project.system.directory}/build-common.xml"/>
+
+	<property name="main.package.name" value="com.mojang.mario/"/>
+	<property name="main.package.spec.version" value="1.0"/>
+	<property name="main.vendor.name" value="John Asmuth"/>
+
+	<path id="project.extra.classpath" />
+
+
+	<!-- this import gives you targets: clean, build, test, javadoc, all -->
+
+	<!-- added for competition -->
+	<target name="update-public" depends="build" >
+		<copy file="${result.jar}" todir="${baseLibraryDir}/../public/system/environmentJars"/>
+	</target>
+	
+</project>
+
