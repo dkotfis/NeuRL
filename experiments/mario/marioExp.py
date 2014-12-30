@@ -1,11 +1,10 @@
 #!/usr/bin/python
 
-# Mario Environment Loader
+# Mario Experiment Loader
 
 import random
 import rlglue.RLGlue as RLGlue
 import matplotlib.pyplot as plt
-from consoleTrainerHelper import *
 
 def trainAgent():
         episodesToRun = 10000
@@ -35,7 +34,7 @@ def demoAgent():
         RLGlue.RL_agent_message("freeze learning");
 	RLGlue.RL_agent_message("set_exploring 1.0")
         for i in range(episodesToRun):
-		loadMario(False, False, i % 100, 0, 1, 0)
+		#loadMario(False, False, i % 100, 0, 1, 0)
                 RLGlue.RL_episode(2000)
                 thisSteps = RLGlue.RL_num_steps()
                 print "Total steps in episode %d is %fd" %(i, thisSteps)
@@ -55,7 +54,7 @@ def main():
 	levelDifficulty - 0..10, how hard it is. 
 	instance - 0..9, determines which Mario you run.	
 	'''
-	loadMario(False, False, 0, 0, 1, whichTrainingMDP)
+	#loadMario(False, False, 0, 0, 1, whichTrainingMDP)
 
 	RLGlue.RL_init()
 

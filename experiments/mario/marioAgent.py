@@ -126,7 +126,7 @@ class MarioAgent(Agent):
     def getMonsters(self, observation):
         monsters = []
         i = 0
-        while (1+2*i < len(observation.intArray)):
+        while (2+2*i < len(observation.intArray) and 3+4*i < len(observation.doubleArray)):
             m = Monster()
             m.type = observation.intArray[1+2*i]
             m.winged = (observation.intArray[2+2*i]) != 0

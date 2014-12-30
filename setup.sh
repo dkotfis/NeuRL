@@ -19,9 +19,6 @@ pushd external/python-codec/src
 python setup.py install
 popd
 
-#Build RL 2009 Competition Software
-pushd external/15-rl-competition-2009
-bash install.bash
-popd
+#TODO: Do we need the java codec?
 
 ldconfig
