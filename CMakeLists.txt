@@ -26,10 +26,8 @@ endif()
 add_library(neurl src/neural_net.cpp src/neural_q.cpp)
 target_link_libraries(neurl ${EIGEN_LIBRARIES})
 
-#Build the rl-glue agent core library with NeuRL
-add_library(neurl_agent experiments/common/neurlAgent.cpp)
-target_link_libraries(neurl_agent neurl)
-
 #Build Mario agent
-add_executable(mario_agent experiments/mario/marioAgent.cpp)
-target_link_libraries(mario_agent rlagent neurl_agent neurl ${RLGLUE_LIBS})
+add_executable(mario_agent
+  experiments/mario/mario_agent.cpp
+  experiments/common/neurl_agent.cpp)
+target_link_libraries(mario_agent rlagent neurl ${RLGLUE_LIBS})

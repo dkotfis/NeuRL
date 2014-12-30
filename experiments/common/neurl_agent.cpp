@@ -2,8 +2,8 @@
 #include <vector>
 
 #include <NeuRL/neural_q.h>
-#include "neurlAgent.h"
 
+#include <rlglue/Agent_common.h>
 #include <rlglue/utils/C/RLStruct_util.h>
 #include <rlglue/utils/C/TaskSpec_Parser.h>
 
@@ -19,7 +19,7 @@ NeuRL::NeuralQ* q = NULL;
 bool freezeLearning = false;
 
 //Exploration factor determines probability of acting randomly
-double explore = 0.95;
+double explore = 1.0;
 
 //These must be defined elsewhere and are environment-specific
 extern void actionDecoder(const int act, action_t* result);
@@ -33,15 +33,21 @@ void agent_init(const char* task_spec)
   //Seed the randomness
   srand(0);
   srand48(0);
+
+  /*
+  //Manually define the task spec since the mario environment produces one that is invalid
+  const char* temp = "VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1 OBSERVATIONS INTS (0 1) DOUBLES (0.1 1.0) CHARCOUNT 1024 ACTIONS INTS (-1 1) (2 0 1)  REWARDS (-10.0 100.0)";
   
   //Struct to hold the parsed task spec
   ts=(taskspec_t*)malloc(sizeof(taskspec_t));
-  int decode_result = decode_taskspec( ts, task_spec );
-  if(decode_result==-1){
-    printf("Could not decode task spec, code: %d for task spec: %s\n",decode_result,task_spec);
+  int decode_result = decode_taskspec( ts, temp );
+  if(decode_result!=0){
+    printf("Could not decode task spec, code: %d for task spec: %s\n",decode_result,temp);
     exit(1);
   }
-  this_action = allocateRLStructPointer(getNumIntAct(ts),getNumDoubleAct(ts),0);
+  */
+  //this_action = allocateRLStructPointer(getNumIntAct(ts),getNumDoubleAct(ts),0);
+  this_action = allocateRLStructPointer(3, 0, 0);
 
   //Create the Neural-Q function
   q = new NeuRL::NeuralQ(numActs, stateDimX*stateDimY);

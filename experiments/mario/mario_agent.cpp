@@ -1,5 +1,5 @@
 
-#include "marioAgent.h"
+#include "mario_agent.h"
 
 int numActs = 12;
 int stateDimX = 20;
