@@ -12,7 +12,8 @@ include_directories(${EIGEN_INCLUDE_DIRS})
 set(RLGLUE_LIBS rlgluenetdev rlutils)
 
 #Set up include and lib paths
-include_directories(include)
+include_directories(include /usr/local/include)
+link_directories(/usr/local/lib)
 
 #Compiler flag magic
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
