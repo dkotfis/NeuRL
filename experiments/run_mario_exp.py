@@ -5,11 +5,6 @@ Usage:
 
 run_mario_exp.py [--glue_port GLUE_PORT]
 
-All unrecognized command line arguments will be passed on to
-mario_agent.py
-
-Adapted from
-
 """
 import subprocess
 import sys
@@ -23,13 +18,15 @@ parser.add_argument('--glue_port', type=str, default="4096",
 args, unknown = parser.parse_known_args()
 my_env = os.environ.copy()
 my_env["RLGLUE_PORT"] = args.glue_port
-
+my_env["PYTHONPATH"] = '../external/python-codec/src/:../src/'
 
 # Start the necessary processes:
-p1 = subprocess.Popen(['rl_glue'], env=my_env)
-p2 = subprocess.Popen(['./mario/mario_environment.sh'], env=my_env)
-p3 = subprocess.Popen(['../build/mario_agent'], env=my_env)
+p1 = subprocess.Popen(['rl_glue'], env=my_env) #RL-Glue
+p2 = subprocess.Popen(['java', '-Xmx128M', '-cp', '../external/infinite_mario/RLVizApp.jar:../external/infinite_mario/mario.jar', 'edu.rutgers.rl3.comp.mario.GeneralizedMario'], env=my_env) #Mario Environment
+p3 = subprocess.Popen(['python', 'mario/marioExp.py'], env=my_env) #Experiment
+p4 = subprocess.Popen(['../build/mario_agent'], env=my_env) #Neural Q Agent
 
 p1.wait()
 p2.wait()
 p3.wait()
+p4.wait()

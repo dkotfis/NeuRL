@@ -1,4 +1,0 @@
-librlglue_la-RL_direct_experiment.lo librlglue_la-RL_direct_experiment.o:  \
- RL_direct_experiment.c ../config/config.h
-
-../config/config.h:
