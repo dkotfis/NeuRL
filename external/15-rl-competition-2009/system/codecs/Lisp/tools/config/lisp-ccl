@@ -1,4 +1,0 @@
-
-LISPBIN="ccl"
-LISP="${LISPBIN} -n -Q -b"
-
