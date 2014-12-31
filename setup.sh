@@ -1,5 +1,10 @@
 #! /bin/bash
 
+#Unzip the RLGlue package
+pushd external
+tar xvf rlglue.tgz
+popd
+
 #Build RL-Glue Core
 pushd external/rlglue-3.04
 ./configure

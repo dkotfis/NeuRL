@@ -1,6 +1,3 @@
-*.o
-*.lo
-*.la
 *.pyc
 *DS_Store
 *~
@@ -11,3 +8,6 @@ external/ale_0.4-2.4/ale_0_4/doc/examples/RLGlueAgent
 external/ale_0.4-2.4/ale_0_4/doc/examples/RLGlueExperiment
 external/ale_0.4-2.4/ale_0_4/libale.so
 external/ale_0.4-2.4/ale_0_4/makefile
+external/rlglue-3.04/
+external/c-codec-2.0/
+external/python-codec/
