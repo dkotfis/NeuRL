@@ -1,4 +1,5 @@
 *.pyc
+*.o
 *DS_Store
 *~
 external/infinite_mario/classes/com/
@@ -11,3 +12,4 @@ external/ale_0.4-2.4/ale_0_4/makefile
 external/rlglue-3.04/
 external/c-codec-2.0/
 external/python-codec/
+roms/*.bin
