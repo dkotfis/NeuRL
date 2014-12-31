@@ -4,13 +4,14 @@
 *.pyc
 *DS_Store
 *~
-external/rlglue-3.04/src/.deps/
-external/c-codec-2.0/src/.deps/
+external/infinite_mario/classes/com/
+external/infinite_mario/classes/edu/
 external/ale_0.4-2.4/ale_0_4/ale
 external/ale_0.4-2.4/ale_0_4/doc/examples/RLGlueAgent
 external/ale_0.4-2.4/ale_0_4/doc/examples/RLGlueExperiment
 external/ale_0.4-2.4/ale_0_4/libale.so
 external/ale_0.4-2.4/ale_0_4/makefile
+external/c-codec-2.0/src/.deps/
 external/c-codec-2.0/Makefile
 external/c-codec-2.0/config.log
 external/c-codec-2.0/config.status
@@ -19,6 +20,7 @@ external/c-codec-2.0/src/.libs/
 external/c-codec-2.0/src/Makefile
 external/c-codec-2.0/tests/Makefile
 external/python-codec/src/build/
+external/rlglue-3.04/src/.deps/
 external/rlglue-3.04/Makefile
 external/rlglue-3.04/config.log
 external/rlglue-3.04/config.status	
