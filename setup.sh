@@ -9,7 +9,7 @@ popd
 
 #Build RL-Glue C Codec
 pushd externl/c-codec-2.0
-./configure
+./configure --with-rl-glue=/usr/local
 make
 make install
 popd
