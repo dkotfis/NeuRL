@@ -1,5 +1,10 @@
 #! /bin/bash
 
+#Unzip the RLGlue package
+pushd external
+tar xvf rlglue.tgz
+popd
+
 #Build RL-Glue Core
 pushd external/rlglue-3.04
 ./configure
@@ -9,7 +14,7 @@ popd
 
 #Build RL-Glue C Codec
 pushd externl/c-codec-2.0
-./configure
+./configure --with-rl-glue=/usr/local
 make
 make install
 popd
