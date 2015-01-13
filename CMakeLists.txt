@@ -3,6 +3,10 @@ cmake_minimum_required(VERSION 2.8.8)
 project(NeuRL)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+set(CMAKE_BUILD_TYPE Debug)
+
+#Use C++11 Definitions
+add_definitions(-std=c++11)
 
 #Add Eigen dependency
 find_package(Eigen REQUIRED)

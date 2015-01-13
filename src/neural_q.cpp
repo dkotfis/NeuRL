@@ -11,7 +11,8 @@ NeuralQ::NeuralQ(int numActions, int inputSize, int maxExperiences, double gamma
   //Create 2 hidden layers
   //TODO: Support customization of hidden layer topology
   int l[4] = {inputSize, (numActions+inputSize)/2, (numActions+inputSize)/2, numActions};
-  std::vector<int> layers(&l[0], &l[0] + 4);
+  std::vector<int> layers(l, l + 4);
+
   nn_ = new NeuralNet(layers, 0.154, alpha);
 
 }

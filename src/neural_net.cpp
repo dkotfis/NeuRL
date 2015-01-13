@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include <stdlib.h>
 
 #include <NeuRL/neural_net.h>
@@ -19,7 +20,7 @@ NeuralNet::NeuralNet(const std::vector<int> &layers, double epsilon, double lear
 
     //Initialize the weights randomly
     for (int j = 0; j < layers[i]*layers[i+1]; j++) {
-      theta_[count++] = ( (double)rand() / RAND_MAX) * 2.0 * epsilon_ - epsilon_; 
+      theta_.push_back( ( (double)rand() / RAND_MAX) * 2.0 * epsilon_ - epsilon_);
     }
   }
 
@@ -27,7 +28,15 @@ NeuralNet::NeuralNet(const std::vector<int> &layers, double epsilon, double lear
 
 void NeuralNet::propagate(const std::vector<double> &x, std::vector<double> &a) const {
 
+  //Verify inputs
+  if (x.size() == 0) {
+    std::cerr << "[NeuralNet] propagate() received empty x" << std::endl;
+  }
+
   int length = layers_.size();
+
+  //Get a copy of the current thetas
+  std::vector<double> tht = theta_;
 
   //Declare a matrix for each layer of weights in the network
   std::vector<Eigen::MatrixXd> theta_mat(length-1);
@@ -35,10 +44,12 @@ void NeuralNet::propagate(const std::vector<double> &x, std::vector<double> &a) 
   //Populate the matrices from the weights
   int flag = 0;
   for (int i = 0; i < length-1; i++) {
-    int size = layers_[i+1] * (layers_[i]+1);
-    std::vector<double> vec(&theta_[flag], &theta_[flag+size]);
-    theta_mat[i] = Eigen::Map<Eigen::MatrixXd>(vec.data(), layers_[i+1], layers_[i]);
+    int size = layers_[i+1] * (layers_[i]);
+    theta_mat[i] = Eigen::Map<Eigen::MatrixXd>(&(*(tht.begin()+flag)), layers_[i+1], layers_[i]);
     flag = flag + size;
+    //Add last column of ones for bias node thetas
+    theta_mat[i].conservativeResize(layers_[i+1], layers_[i] + 1);
+    theta_mat[i].leftCols(1) = Eigen::VectorXd::Ones(layers_[i+1]);
   }
 
   //Declare the layers as a giant list
@@ -76,13 +87,27 @@ void NeuralNet::propagate(const std::vector<double> &x, std::vector<double> &a) 
 
   //Copy the result to the output
   for (int i = 0; i < layerX[length-1].size(); i++) {
-    a[i] = layerX[length-1][i];
+    a.push_back(layerX[length-1][i]);
   }
 }
 
 void NeuralNet::update(const std::vector<double> &x, const std::vector<double> &y, const std::vector<double> &a) {
 
+  //Verify inputs
+  if (x.size() == 0) {
+    std::cerr << "[NeuralNet] update() received empty x" << std::endl;
+  }
+  if (y.size() == 0) {
+    std::cerr << "[NeuralNet] update() received empty y" << std::endl;
+  }
+  if (a.size() == 0) {
+    std::cerr << "[NeuralNet] update() received empty a" << std::endl;
+  }
+
   int length = layers_.size();
+
+  //Get a copy of the current thetas
+  std::vector<double> tht = theta_;
 
   //Declare a matrix for each layer of weights in the network
   std::vector<Eigen::MatrixXd> theta_mat(length-1);
@@ -91,9 +116,11 @@ void NeuralNet::update(const std::vector<double> &x, const std::vector<double> &
   int flag = 0;
   for (int i = 0; i < length-1; i++) {
     int size = layers_[i+1] * (layers_[i]+1);
-    std::vector<double> vec(&theta_[flag], &theta_[flag+size]);
-    theta_mat[i] = Eigen::Map<Eigen::MatrixXd>(vec.data(), layers_[i+1], layers_[i]);
+    theta_mat[i] = Eigen::Map<Eigen::MatrixXd>(&(*(tht.begin()+flag)), layers_[i+1], layers_[i]);
     flag = flag + size;
+    //Add last column of ones for bias node thetas
+    theta_mat[i].conservativeResize(layers_[i+1], layers_[i] + 1);
+    theta_mat[i].leftCols(1) = Eigen::VectorXd::Ones(layers_[i+1]);
   }
 
   //Declare error structure
@@ -136,7 +163,7 @@ void NeuralNet::update(const std::vector<double> &x, const std::vector<double> &
 
     //Calculate partial derivatives
     Eigen::MatrixXd temp = theta_mat[i] * regularization_;
-    temp.col(0) = Eigen::VectorXd::Zero(temp.cols());
+    temp.col(0) = Eigen::VectorXd::Zero(temp.rows());
     Eigen::MatrixXd derivative = grad + temp;
 
     //Update thetas
@@ -147,6 +174,14 @@ void NeuralNet::update(const std::vector<double> &x, const std::vector<double> &
 }
 
 void NeuralNet::propagateAndUpdate(const std::vector<double> &x, const std::vector<double> &y) {
+  //Verify inputs
+  if (x.size() == 0) {
+    std::cerr << "[NeuralNet] propagateAndUpdate() received empty x" << std::endl;
+  }
+  if (y.size() == 0) {
+    std::cerr << "[NeuralNet] propagateAndUpdate() received empty y" << std::endl;
+  }
+
   std::vector<double> a;
   propagate(x,a);
   update(x,y,a);

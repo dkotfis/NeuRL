@@ -28,16 +28,24 @@ extern std::vector<double> stateEncoder(const observation_t obs);
 extern void randomAction(action_t* result);
 extern int numActs, stateDimX, stateDimY;
 
+#include <iostream>
+
 void agent_init(const char* task_spec)
 {
   //Seed the randomness
   srand(0);
   srand48(0);
 
+  //Create the Neural-Q function
+  q = new NeuRL::NeuralQ(numActs, stateDimX*stateDimY);
+}
+
+const action_t *agent_start(const observation_t *this_observation) {
+
   /*
   //Manually define the task spec since the mario environment produces one that is invalid
-  const char* temp = "VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1 OBSERVATIONS INTS (0 1) DOUBLES (0.1 1.0) CHARCOUNT 1024 ACTIONS INTS (-1 1) (2 0 1)  REWARDS (-10.0 100.0)";
-  
+  const char* temp = "VERSION RL-Glue-3.0 PROBLEMTYPE episodic DISCOUNTFACTOR 1 OBSERVATIONS INTS (0 1) DOUBLES (0.1 1.0) CHARCOUNT 1024 ACTIONS INTS (-1 1) (2 0 1)
+  REWARDS (-10.0 100.0)";
   //Struct to hold the parsed task spec
   ts=(taskspec_t*)malloc(sizeof(taskspec_t));
   int decode_result = decode_taskspec( ts, temp );
@@ -49,11 +57,6 @@ void agent_init(const char* task_spec)
   //this_action = allocateRLStructPointer(getNumIntAct(ts),getNumDoubleAct(ts),0);
   this_action = allocateRLStructPointer(3, 0, 0);
 
-  //Create the Neural-Q function
-  q = new NeuRL::NeuralQ(numActs, stateDimX*stateDimY);
-}
-
-const action_t *agent_start(const observation_t *this_observation) {
   //Determine the policy for this state
   std::vector<double> state = stateEncoder(*this_observation);
   int act = q->policy(state);
@@ -74,6 +77,7 @@ const action_t *agent_start(const observation_t *this_observation) {
 }
 
 const action_t *agent_step(double reward, const observation_t *this_observation) {
+
   //Determine the policy for this state
   std::vector<double> state = stateEncoder(*this_observation);
   int act = q->policy(state);
@@ -113,6 +117,7 @@ void agent_freeze() {
 }
 
 const char* agent_message(const char* inMessage) {
+
   if (strstr(inMessage, "freeze_learning") != NULL) {
     freezeLearning = true;
     return "message understood, policy frozen";

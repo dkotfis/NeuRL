@@ -17,7 +17,14 @@ int actionEncoder(const action_t act) {
 }
 
 std::vector<double> stateEncoder(const observation_t obs) {
-  std::vector<double> s;
+  std::vector<double> s(stateDimX*stateDimY);
+
+  for (int i = 0; i < stateDimX; i++) {
+    for (int j = 0; j < stateDimY; j++) {
+      s[i*stateDimY + j] = 0.0;
+    }
+  }
+
   return s;
 }
 
