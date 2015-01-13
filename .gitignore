@@ -2,6 +2,7 @@
 *.o
 *DS_Store
 *~
+build
 external/infinite_mario/classes/com/
 external/infinite_mario/classes/edu/
 external/ale_0.4-2.4/ale_0_4/ale

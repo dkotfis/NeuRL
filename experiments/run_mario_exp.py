@@ -24,7 +24,8 @@ my_env["PYTHONPATH"] = '../external/python-codec/src/:../src/'
 p1 = subprocess.Popen(['rl_glue'], env=my_env) #RL-Glue
 p2 = subprocess.Popen(['java', '-Xmx128M', '-cp', '../external/infinite_mario/RLVizApp.jar:../external/infinite_mario/mario.jar', 'edu.rutgers.rl3.comp.mario.GeneralizedMario'], env=my_env) #Mario Environment
 p3 = subprocess.Popen(['python', 'mario/marioExp.py'], env=my_env) #Experiment
-p4 = subprocess.Popen(['python', 'mario/marioAgent.py'], env=my_env) #Neural Q Agent
+p4 = subprocess.Popen(['../build/mario_agent'], env=my_env) #Neural Q Agent (C++)
+#p4 = subprocess.Popen(['python', 'mario/marioAgent.py'], env=my_env) #Neural Q Agent (Python)
 
 p1.wait()
 p2.wait()

@@ -11,6 +11,16 @@ To run demonstrations with the NeuRL library, Rl-Glue and the 2009 AI Competitio
 $ sudo ./setup.sh
 ```
 
+##Building
+
+The C++ source code for the project can be built with CMake. To do this from the home directory:
+```bash
+mkdir build
+cd build
+cmake ..
+make
+```
+
 ##Running Demo Experiments
 
 Demonstration experiments are in the 'experiments' directory. They can be run with python executables, eg:
